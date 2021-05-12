@@ -63,19 +63,17 @@
         }
 
         form {
-            $formPadding: 0.5em;
-
             &.actionForm {
                 display: flex;
                 flex-direction: column;
+                $formPadding: 0.5em;
 
                 div {
                     display: grid;
                     grid-template-columns: 50% 50%;
 
                     label {
-                        justify-self: end;
-                        padding-right: $formPadding;
+                        text-align: center;
                         font-weight: bold;
                     }
 

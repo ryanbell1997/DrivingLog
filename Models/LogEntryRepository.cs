@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrivingLog.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -93,13 +94,18 @@ namespace DrivingLog.Models
         public decimal CalculateTotalEarnings(TimeSpan totalTime)
         {
             decimal hourlyRate = 9;
-
             decimal returnEarnings;
 
-            int hoursToMinutes = totalTime.Hours * 60;
-            decimal amountToCharge = (hoursToMinutes + totalTime.Minutes) / 60;
+            decimal minutes = totalTime.Minutes;
+            decimal hours = totalTime.Hours;
+
+            decimal hoursToMinutes = hours * 60;
+            decimal totalMinutes = minutes + hoursToMinutes;
+            decimal amountToCharge = totalMinutes / 60;
+
+            decimal amountToChargeRounded = Rounder.RoundEarnings(amountToCharge);
             
-            returnEarnings = hourlyRate * amountToCharge;
+            returnEarnings = hourlyRate * amountToChargeRounded;
 
             return returnEarnings;
         }

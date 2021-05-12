@@ -43,8 +43,7 @@
       display: grid;
       grid-template-columns: 50% 50%; }
       html body form.actionForm div label {
-        justify-self: end;
-        padding-right: 0.5em;
+        text-align: center;
         font-weight: bold; }
       html body form.actionForm div input {
         width: 40%; }

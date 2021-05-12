@@ -3,9 +3,13 @@ using DrivingLog.Models;
 using DrivingLog.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DrivingLog.Controllers
@@ -80,6 +84,38 @@ namespace DrivingLog.Controllers
             }
 
             return View(eLogEntry);
+        }
+
+        public IActionResult DownloadExcel(LogEntryListViewModel vm)
+        {
+            List<LogEntry> lstLogEntries = _logEntryRepository.GetLogEntriesByDate(vm.MonthYear).ToList();
+            MemoryStream stream = new MemoryStream();
+
+            using (ExcelPackage Ep = new ExcelPackage(stream))
+            {
+                ExcelWorksheet Sheet = Ep.Workbook.Worksheets.Add("Report");
+                
+                int row = 2;
+                foreach (LogEntry eLogEntry in lstLogEntries)
+                {
+                    Sheet.Cells[string.Format("A{0}", row)].Value = eLogEntry.Date;
+                    Sheet.Cells[string.Format("B{0}", row)].Value = eLogEntry.StartDateTime;
+                    Sheet.Cells[string.Format("C{0}", row)].Value = eLogEntry.FinishDateTime;
+                    Sheet.Cells[string.Format("D{0}", row)].Value = eLogEntry.TotalTime;
+                    Sheet.Cells[string.Format("E{0}", row)].Value = eLogEntry.QuantityCharged;
+                    row++;
+
+                    
+                    Ep.Save();
+                }
+
+                Sheet.Cells["A:AZ"].AutoFitColumns();
+            };  
+            
+            stream.Position = 0;
+            string excelName = $"{vm.MonthYear}-driving-log.csv";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheet.sheet", excelName);
+
         }
     }
 }

@@ -73,5 +73,7 @@
             <td></td>
         </tr>
     </table>
-    <button type="button" class="bg-success text-white rounded" value="Download Excel" id="downloadExcel">Download Excel</button>
+    <form asp-controller="LogEntry" asp-action="DownloadExcel" asp-route-eDate="@Model.MonthYear">
+        <button type="submit" class="bg-success text-white rounded" value="Download Excel" id="downloadExcel">Download Excel</button>
+    </form>
 </div>
