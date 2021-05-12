@@ -1,0 +1,12 @@
+﻿@model LogEntry
+
+<tr>
+    <td>@Model.Date.ToShortDateString()</td>
+    <td>@Model.StartDateTime</td>
+    <td>@Model.FinishDateTime</td>
+    <td>@Model.TotalTime</td>
+    <td>£@Model.QuantityCharged</td>
+    <td><form asp-controller="LogEntry" asp-action="EditLogEntry" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="editButton" /><i class="fas fa-edit" aria-hidden="true"></i></button></form></td>
+    <td><form asp-controller="LogEntry" asp-action="DeleteLogEntry" asp-route-id="@Model.Id" method="post"><button type="submit" class="deleteButton"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
+</tr>

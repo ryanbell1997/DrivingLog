@@ -1,0 +1,113 @@
+﻿html {
+    body {
+        width: 100vw;
+        margin: 0px auto;
+        font-family: 'Poppins', sans-serif;
+
+        main {
+            width: 90%;
+            margin: 0px auto;
+        }
+
+        table {
+            width: 100%;
+            background-color: #cfffdb;
+            padding: 10%;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        div {
+            &.filterRow {
+                display: grid;
+                grid-template-columns: 50% 30% 20%;
+            }
+        }
+
+        a {
+            &#addButtonForm {
+                margin-right: 1em;
+            }
+        }
+
+        p {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            border-radius: 10%;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            padding: 7px;
+
+            &.editButton {
+                background-color: yellow;
+            }
+
+            &.deleteButton {
+                background-color: lightcoral;
+            }
+
+            &.addButton {
+                background-color: lightgreen;
+                height: 90%;
+                width: auto;
+                justify-content: flex-end;
+            }
+        }
+
+        form {
+            $formPadding: 0.5em;
+
+            &.actionForm {
+                display: flex;
+                flex-direction: column;
+
+                div {
+                    display: grid;
+                    grid-template-columns: 50% 50%;
+
+                    label {
+                        justify-self: end;
+                        padding-right: $formPadding;
+                        font-weight: bold;
+                    }
+
+                    input {
+                        width: 40%;
+                    }
+
+                    input[type="submit"] {
+                        justify-self: right;
+                        width: 20%;
+                        margin-right: $formPadding;
+                    }
+
+                    &.actionFormContainer {
+                        background-color: lightblue;
+                        -webkit-box-shadow: 0px 10px black
+                    }
+                }
+            }
+
+            label {
+                &.questionLabel {
+                    width: 40%;
+                    text-align: right;
+                }
+            }
+
+            input {
+                &.questionInput {
+                    width: 60%;
+                }
+            }
+        }
+    }
+}

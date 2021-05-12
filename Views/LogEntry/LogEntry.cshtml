@@ -1,0 +1,55 @@
+﻿@using System.Globalization
+
+@model LogEntryListViewModel
+@{ 
+
+    Layout = "_MainLayout";
+    DateTime todaysDate = DateTime.Now;
+    string todaysMonth = DateTime.Now.ToString("MMMM");
+}
+
+<div>
+    <h1 class="text-center" id="test">Driving Log: @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.DisplayDate.Month), @Model.DisplayDate.Year</h1>
+    <p class="text-center">View or add to your driving log below. You can change the view period using the input above the table. You can edit or delete entries if you've made a mistake.</p>
+
+    <div class="filterRow">
+        <form asp-controller="LogEntry" asp-action="LogEntry" asp-route-eDate="@Model.MonthYear">
+            <label asp-for="@Model.MonthYear">Filter by Date: </label>
+            <input type="month" asp-for="@Model.MonthYear" />
+            <input type="submit" value="Go" />
+        </form>
+        <div></div>
+        <a asp-controller="LogEntry" asp-action="AddLogEntry" class="d-flex justify-content-end align-content-center" id="addButtonForm"><button type="submit" class="addButton"><i class="fa fa-plus"></i></button></a>
+    </div>
+
+
+    <table class="table" id="logEntryTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>Finish Time</th>
+                <th>Total Time</th>
+                <th>Earnings</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in Model.LogEntries)
+            {
+                <partial name="_LogEntry" model="entry" />
+            }
+        </tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><b>£@Model.LogEntries.Sum(le => le.QuantityCharged)</b></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <button type="button" class="bg-success text-white rounded" value="Download Excel" id="downloadExcel">Download Excel</button>
+</div>
