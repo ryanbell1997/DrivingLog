@@ -2,23 +2,35 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-$('#test').on('click', (e) => {
-    document.getElementById('modalBodyText').innerHTML = "Are you sure you want to delete the entry on X?";
-    $('.modal').show();
+
+
+$('.deleteButton').on('click', (e) => {
+    $('#thisModal').modal('toggle');
+    let myRow = e.target.parentNode.parentNode.parentElement;
+    let dateToDelete = myRow.children[0].innerText;
+    let idToDelete = myRow.id.substring(6);
+
+    PopulateModalForm(idToDelete, dateToDelete);
 })
 
 $('.close').on('click', () => {
-    $('.modal').hide();
+    $('#thisModal').modal('toggle');
 });
 
 $('.btn').on('click', () => {
     $('.modal').hide();
 });
 
+$('#deleteLogEntryButton').on('click', () => {
+    DeleteEntry();
+})
+
 document.getElementById('downloadExcel').addEventListener('click', () => {
     exportTableToExcel('downloadExcel');
 })
 
-$("#logEntryTable").table2excel({
-    filename: "excel_sheet-name.xls"
-});
+const PopulateModalForm = (id, date) => {
+    document.getElementById('deleteModalText').textContent = `Are you sure you want to delete the entry on ${date}?`;
+    let deleteForm = document.getElementById('deleteLogEntryForm');
+    deleteForm.setAttribute("action", deleteForm.getAttribute("action") + "/" + id);
+}

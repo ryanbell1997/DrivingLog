@@ -74,22 +74,12 @@ namespace DrivingLog.Controllers
         {
             LogEntry eLogEntry = new();
 
-            if(id != 0)
+            if (id != 0)
             {
-               eLogEntry = _logEntryRepository.GetLogEntryById(id);
+                eLogEntry = _logEntryRepository.GetLogEntryById(id);
             }
 
             return View(eLogEntry);
         }
-
-        [HttpPost]
-        public IActionResult SubmitEditLogEntry(LogEntry eLogEntry)
-        {
-
-            _logEntryRepository.EditLogEntry(eLogEntry);
-
-            return RedirectToAction("LogEntry");
-        }
-
     }
 }
