@@ -33,7 +33,7 @@ namespace DrivingLog.Controllers
         {
             LogEntryListViewModel logEntryListViewModel = new LogEntryListViewModel();
             logEntryListViewModel.LogEntries = _logEntryRepository.AllLogEntries;
-            logEntryListViewModel.DisplayDate = DateTime.Now;
+            logEntryListViewModel.DisplayDate =  logEntryListViewModel.MonthYear = DateTime.Now;
             return View(logEntryListViewModel);
         }
 
@@ -91,30 +91,22 @@ namespace DrivingLog.Controllers
             List<LogEntry> lstLogEntries = _logEntryRepository.GetLogEntriesByDate(vm.MonthYear).ToList();
             MemoryStream stream = new MemoryStream();
 
-            using (ExcelPackage Ep = new ExcelPackage(stream))
+            using (ExcelPackage package = new ExcelPackage(stream))
             {
-                ExcelWorksheet Sheet = Ep.Workbook.Worksheets.Add("Report");
-                
-                int row = 2;
-                foreach (LogEntry eLogEntry in lstLogEntries)
-                {
-                    Sheet.Cells[string.Format("A{0}", row)].Value = eLogEntry.Date;
-                    Sheet.Cells[string.Format("B{0}", row)].Value = eLogEntry.StartDateTime;
-                    Sheet.Cells[string.Format("C{0}", row)].Value = eLogEntry.FinishDateTime;
-                    Sheet.Cells[string.Format("D{0}", row)].Value = eLogEntry.TotalTime;
-                    Sheet.Cells[string.Format("E{0}", row)].Value = eLogEntry.QuantityCharged;
-                    row++;
-
-                    
-                    Ep.Save();
-                }
-
-                Sheet.Cells["A:AZ"].AutoFitColumns();
-            };  
-            
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+                workSheet.Cells.LoadFromCollection(lstLogEntries, true);
+                workSheet.Column(2).Style.Numberformat.Format = "d-mmm-yy";
+                workSheet.Column(3).Style.Numberformat.Format = "h:mm";
+                workSheet.Column(4).Style.Numberformat.Format = "h:mm";
+                workSheet.Column(5).Style.Numberformat.Format = "£#,##0.00";
+                workSheet.Column(6).Style.Numberformat.Format = "h:mm";
+                workSheet.Row(1).Style.Font.Bold = true;
+                workSheet.Cells.AutoFitColumns();
+                package.Save();
+            }
             stream.Position = 0;
-            string excelName = $"{vm.MonthYear}-driving-log.csv";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheet.sheet", excelName);
+            string excelName = $"{vm.MonthYear.Month}-{vm.MonthYear.Year}-driving-log.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
 
         }
     }

@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-footer">
                     <form asp-controller="LogEntry" asp-action="DeleteLogEntry" asp-route-id="" id="deleteLogEntryForm">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-danger">Delete Entry</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
                 </div>
@@ -74,6 +74,7 @@
         </tr>
     </table>
     <form asp-controller="LogEntry" asp-action="DownloadExcel" asp-route-eDate="@Model.MonthYear">
+        <input type="hidden" asp-for="@Model.MonthYear" value="@Model.MonthYear" />
         <button type="submit" class="bg-success text-white rounded" value="Download Excel" id="downloadExcel">Download Excel</button>
     </form>
 </div>
