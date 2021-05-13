@@ -26,10 +26,6 @@ $('#deleteLogEntryButton').on('click', () => {
     DeleteEntry();
 })
 
-document.getElementById('downloadExcel').addEventListener('click', () => {
-    exportTableToExcel('downloadExcel');
-})
-
 const PopulateModalForm = (id, date) => {
 
     document.getElementById('deleteModalText').textContent = `Are you sure you want to delete the entry on ${date}?`;

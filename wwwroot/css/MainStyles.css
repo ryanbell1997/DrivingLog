@@ -44,18 +44,19 @@
       grid-template-columns: 50% 50%; }
       html body form.actionForm div label {
         text-align: right;
-        font-weight: bold; }
+        font-weight: bold;
+        margin-right: 0.5em; }
       html body form.actionForm div input {
         width: 40%; }
       html body form.actionForm div input[type="submit"] {
+        display: flex;
         justify-self: right;
+        align-items: center;
         width: 20%;
         margin-right: 0.5em; }
       html body form.actionForm div.actionFormContainer {
         background-color: lightblue;
         -webkit-box-shadow: 0px 10px black; }
-  html body form label.questionLabel {
-    width: 40%;
-    text-align: right; }
-  html body form input.questionInput {
-    width: 60%; }
+      html body form.actionForm div a {
+        width: 20%;
+        margin: auto 0 auto 0.5em; }
