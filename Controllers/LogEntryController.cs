@@ -1,6 +1,7 @@
 ﻿using DrivingLog.Interfaces;
 using DrivingLog.Models;
 using DrivingLog.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace DrivingLog.Controllers
 {
+    [Authorize]
     public class LogEntryController : Controller
     {
 

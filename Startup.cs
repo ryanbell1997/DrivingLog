@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DrivingLog.Interfaces;
 using DrivingLog.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DrivingLog
 {
@@ -28,6 +29,8 @@ namespace DrivingLog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddRazorPages();
 
             services.AddScoped<LogEntryRepository>();
 
@@ -53,6 +56,7 @@ namespace DrivingLog
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -64,6 +68,7 @@ namespace DrivingLog
                 endpoints.MapControllerRoute(
                     name: "monthRoute",
                     pattern: "{controller=LogEntry}/{action=GetLogEntriesByDate}/{monthYear?}");
+                endpoints.MapRazorPages();
             });
         }
     }
