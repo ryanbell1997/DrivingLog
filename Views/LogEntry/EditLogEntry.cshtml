@@ -8,17 +8,17 @@
     <h1 class="text-center pb-3">Edit Log Entry</h1>
     <form asp-controller="LogEntry" asp-action="SubmitEditLogEntry" method="post" class="actionForm">
         <div>
-            <label asp-for="Date" class="questionLabel">Date: </label>
+            <label asp-for="Date">Date: </label>
             @Html.EditorFor(le => le.Date)
         </div>
         <br />
         <div>
-            <label asp-for="StartDateTime" class="questionLabel">Start Time: </label>
+            <label asp-for="StartDateTime">Start Time: </label>
             <input asp-for="StartDateTime" type="time" step="900" value="@Model.StartDateTime" class="questionInput" />
         </div>
         <br />
         <div>
-            <label asp-for="FinishDateTime" class="questionLabel">Finish Time: </label>
+            <label asp-for="FinishDateTime">Finish Time: </label>
             <input asp-for="FinishDateTime" type="time" value="@Model.FinishDateTime" class="questionInput" />
         </div>
         <br />

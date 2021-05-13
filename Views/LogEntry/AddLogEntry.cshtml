@@ -11,17 +11,17 @@
     <h1 class="text-center pb-3">Add Log Entry</h1>
     <form asp-controller="LogEntry" asp-action="AddLogEntry" method="post" class="actionForm">
         <div>
-            <label asp-for="Date"></label>
+            <label asp-for="Date">Date: </label>
             @Html.EditorFor(le => le.Date)
         </div>
         <br />
         <div>
-            <label asp-for="StartDateTime">Start Time</label>
+            <label asp-for="StartDateTime">Start Time: </label>
             <input asp-for="StartDateTime" type="time" />
         </div>
         <br />
         <div>
-            <label asp-for="FinishDateTime">Finish Time</label>
+            <label asp-for="FinishDateTime">Finish Time: </label>
             <input asp-for="FinishDateTime" type="time" />
         </div>
             <br />
