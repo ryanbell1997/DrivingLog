@@ -5,14 +5,54 @@
   html body main {
     width: 90%;
     margin: 0px auto; }
-  html body table {
+  @media (max-width: 400px) {
+    html body #tableContainer {
+      overflow-x: auto; } }
+  html body #tableContainer table {
     width: 100%;
     background-color: #cfffdb;
     padding: 10%;
     font-family: 'Poppins', sans-serif; }
+    @media (max-width: 400px) {
+      html body #tableContainer table {
+        overflow-x: auto; }
+        html body #tableContainer table #addButtonForm {
+          display: none !important; } }
   html body div.filterRow {
     display: grid;
-    grid-template-columns: 50% 30% 20%; }
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 75% 25%; }
+    html body div.filterRow #filterHeader {
+      margin-bottom: 0.2em;
+      font-weight: bold;
+      grid-column: 1 / -1; }
+    @media (min-width: 401px) {
+      html body div.filterRow #addButtonAboveTable {
+        display: none; } }
+    @media (max-width: 400px) {
+      html body div.filterRow #addButtonAboveTable {
+        align-items: center;
+        display: flex;
+        background-color: lightgreen;
+        height: 90%;
+        width: 2.5em;
+        justify-content: center;
+        border-radius: 5px;
+        margin: 0px auto; }
+        html body div.filterRow #addButtonAboveTable button {
+          display: flex;
+          align-items: center;
+          text-align: center; } }
+    html body div.filterRow form {
+      display: grid; }
+      @media (min-width: 401px) {
+        html body div.filterRow form {
+          grid-template-columns: 25% 10% 65%; } }
+      @media (max-width: 400px) {
+        html body div.filterRow form {
+          grid-template-columns: 75% 25%; }
+          html body div.filterRow form input[type="submit"] {
+            justify-self: left; } }
   html body a#addButtonForm {
     margin-right: 1em; }
   html body p {
@@ -39,24 +79,45 @@
   html body form.actionForm {
     display: flex;
     flex-direction: column; }
-    html body form.actionForm div {
-      display: grid;
-      grid-template-columns: 50% 50%; }
-      html body form.actionForm div label {
-        text-align: right;
-        font-weight: bold;
-        margin-right: 0.5em; }
-      html body form.actionForm div input {
-        width: 40%; }
-      html body form.actionForm div input[type="submit"] {
-        display: flex;
-        justify-self: right;
-        align-items: center;
-        width: 20%;
-        margin-right: 0.5em; }
-      html body form.actionForm div.actionFormContainer {
-        background-color: lightblue;
-        -webkit-box-shadow: 0px 10px black; }
-      html body form.actionForm div a {
-        width: 20%;
-        margin: auto 0 auto 0.5em; }
+    html body form.actionForm input[type="submit"] {
+      display: flex;
+      align-items: center; }
+    @media (min-width: 401px) {
+      html body form.actionForm div {
+        display: grid;
+        grid-template-columns: 50% 50%; }
+        html body form.actionForm div label {
+          text-align: right;
+          font-weight: bold;
+          margin-right: 0.5em; }
+        html body form.actionForm div input {
+          width: 40%; }
+        html body form.actionForm div input[type="submit"] {
+          justify-self: right;
+          margin-right: 0.5em;
+          width: 20%; }
+        html body form.actionForm div.actionFormContainer {
+          background-color: lightblue;
+          -webkit-box-shadow: 0px 10px black; }
+        html body form.actionForm div a {
+          width: 20%;
+          margin: auto 0 auto 0.5em; } }
+    @media (max-width: 400px) {
+      html body form.actionForm div {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 50% 50%; }
+        html body form.actionForm div label {
+          justify-self: center;
+          font-weight: bold; }
+        html body form.actionForm div input {
+          justify-self: center;
+          width: 80%; }
+        html body form.actionForm div a {
+          text-align: center; }
+        html body form.actionForm div input[type="submit"] {
+          width: 30%;
+          padding: 0.2em;
+          justify-content: center;
+          align-self: center;
+          margin-bottom: 0.5em; } }

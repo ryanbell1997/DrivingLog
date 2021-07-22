@@ -88,6 +88,17 @@ namespace DrivingLog.Controllers
             return View(eLogEntry);
         }
 
+        [HttpPost]
+        public IActionResult SubmitEditLogEntry(LogEntry eLogEntry)
+        {
+            if(eLogEntry != null)
+            {
+                _logEntryRepository.EditLogEntry(eLogEntry);
+            }
+
+            return RedirectToAction("LogEntry");
+        }
+
         public IActionResult DownloadExcel(LogEntryListViewModel vm)
         {
             List<LogEntry> lstLogEntries = _logEntryRepository.GetLogEntriesByDate(vm.MonthYear).ToList();
@@ -102,6 +113,7 @@ namespace DrivingLog.Controllers
                 workSheet.Column(4).Style.Numberformat.Format = "h:mm";
                 workSheet.Column(5).Style.Numberformat.Format = "£#,##0.00";
                 workSheet.Column(6).Style.Numberformat.Format = "h:mm";
+                workSheet.Column(7).Style.Numberformat.Format = "0.00";
                 workSheet.Row(1).Style.Font.Bold = true;
                 workSheet.Cells.AutoFitColumns();
                 package.Save();

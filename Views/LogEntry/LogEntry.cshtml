@@ -35,44 +35,47 @@
     <p class="text-center">View or add to your driving log below. You can change the view period using the input above the table. You can edit or delete entries if you've made a mistake.</p>
 
     <div class="filterRow">
+        <p id="filterHeader">Filter by Date:</p>
         <form asp-controller="LogEntry" asp-action="LogEntry" asp-route-eDate="@Model.MonthYear">
-            <label asp-for="@Model.MonthYear">Filter by Date: </label>
             <input type="month" asp-for="@Model.MonthYear" />
             <input type="submit" value="Go" />
         </form>
+        <a asp-controller="LogEntry" asp-action="AddLogEntry" id="addButtonAboveTable"><button type="submit" class="addButton"><i class="fa fa-plus"></i></button></a>
         <div></div>
-        
+
     </div>
 
-
-    <table class="table" id="logEntryTable">
-        <thead class="thead-dark">
+    <div id="tableContainer">
+        <table class="table" id="logEntryTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>Finish Time</th>
+                    <th>Total Time</th>
+                    <th>Earnings</th>
+                    <th></th>
+                    <th><a asp-controller="LogEntry" asp-action="AddLogEntry" class="d-flex justify-content-end align-content-center" id="addButtonForm"><button type="submit" class="addButton"><i class="fa fa-plus"></i></button></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.LogEntries)
+                {
+                    <partial name="_LogEntry" model="entry" />
+                }
+            </tbody>
             <tr>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>Finish Time</th>
-                <th>Total Time</th>
-                <th>Earnings</th>
-                <th></th>
-                <th><a asp-controller="LogEntry" asp-action="AddLogEntry" class="d-flex justify-content-end align-content-center" id="addButtonForm"><button type="submit" class="addButton"><i class="fa fa-plus"></i></button></a></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>£@Model.LogEntries.Sum(le => le.QuantityCharged)</b></td>
+                <td></td>
+                <td></td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var entry in Model.LogEntries)
-            {
-                <partial name="_LogEntry" model="entry" />
-            }
-        </tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><b>£@Model.LogEntries.Sum(le => le.QuantityCharged)</b></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+        </table>
+
+    </div>
     <form asp-controller="LogEntry" asp-action="DownloadExcel" asp-route-eDate="@Model.MonthYear">
         <input type="hidden" asp-for="@Model.MonthYear" value="@Model.MonthYear" />
         <button type="submit" class="bg-success text-white rounded" value="Download Excel" id="downloadExcel">Download Excel</button>

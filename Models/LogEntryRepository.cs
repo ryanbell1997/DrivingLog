@@ -44,6 +44,8 @@ namespace DrivingLog.Models
 
                 eLogEntry.QuantityCharged = CalculateTotalEarnings(eLogEntry.TotalTime);
 
+                eLogEntry.FormattedTotalTime = CalculateTotalTimeInDecimal(eLogEntry.TotalTime);
+
                 _appDbContext.Add(eLogEntry);
 
                 _appDbContext.SaveChanges();
@@ -108,6 +110,18 @@ namespace DrivingLog.Models
             returnEarnings = hourlyRate * amountToChargeRounded;
 
             return returnEarnings;
+        }
+
+        public decimal CalculateTotalTimeInDecimal(TimeSpan totalTime)
+        {
+            int totalMinutes;
+            int hoursInMinutes = totalTime.Hours * 60;
+
+            totalMinutes = hoursInMinutes + totalTime.Minutes;
+
+            decimal returnDecimal = totalMinutes / 60m;
+
+            return returnDecimal;
         }
     }
 }

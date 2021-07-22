@@ -1,4 +1,20 @@
-﻿html {
+﻿
+$phoneWidth: 400px;
+$computerMinWidth: 401px;
+
+@mixin phone {
+    @media (max-width: $phoneWidth){
+        @content;
+    }
+}
+
+@mixin computer {
+    @media(min-width: $computerMinWidth){
+        @content;
+    }
+}
+
+html {
     body {
         width: 100vw;
         margin: 0px auto;
@@ -9,17 +25,83 @@
             margin: 0px auto;
         }
 
-        table {
-            width: 100%;
-            background-color: #cfffdb;
-            padding: 10%;
-            font-family: 'Poppins', sans-serif;
-        }
+        #tableContainer{
+            @include phone {
+                overflow-x: auto;
+            }
+            
+
+            table {
+                width: 100%;
+                background-color: #cfffdb;
+                padding: 10%;
+                font-family: 'Poppins', sans-serif;
+    
+                @include computer {
+    
+                }
+    
+                @include phone {
+                    overflow-x: auto;
+
+                    #addButtonForm {
+                        display: none!important;
+                    }
+                }
+            }
+        }       
 
         div {
             &.filterRow {
                 display: grid;
-                grid-template-columns: 50% 30% 20%;
+                grid-template-rows: 50% 50%;
+                grid-template-columns: 75% 25%;
+                
+                #filterHeader {
+                    margin-bottom: 0.2em;
+                    font-weight: bold;
+                    grid-column: 1 / -1;
+                }
+
+                #addButtonAboveTable{
+                    @include computer{
+                        display: none;
+                    }
+
+                    @include phone {
+                        align-items: center;
+                        display: flex;
+                        background-color: lightgreen;
+                        height: 90%;
+                        width: 2.5em;
+                        justify-content: center;
+                        border-radius: 5px;
+                        margin: 0px auto;
+
+                        button {
+                            display: flex;
+                            align-items:center;
+                            text-align: center;
+                        }
+                    }
+                }
+
+                form {
+
+                    display: grid;
+
+                    @include computer {
+                        grid-template-columns: 25% 10% 65%;
+                    }
+
+                    @include phone {
+                        grid-template-columns: 75% 25% ;
+
+                        & input[type="submit"]{
+                            justify-self: left;
+                        }
+                    }
+                }  
             }
         }
 
@@ -62,44 +144,78 @@
             }
         }
 
-        form {
+        & form {
             &.actionForm {
                 display: flex;
                 flex-direction: column;
                 $formPadding: 0.5em;
+                
+                & input[type="submit"] {
+                    display: flex;
+                    align-items: center;
+                }
 
-                div {
-                    display: grid;
-                    grid-template-columns: 50% 50%;
-
-                    label {
-                        text-align: right;
-                        font-weight: bold;
-                        margin-right: $formPadding;
+                @include computer {
+                    & div {
+                        display: grid;
+                        grid-template-columns: 50% 50%;
+    
+                        & label {
+                            text-align: right;
+                            font-weight: bold;
+                            margin-right: $formPadding;
+                        }
+    
+                        & input {
+                            width: 40%;
+                        }
+    
+                        & input[type="submit"] {
+                            justify-self: right;
+                            margin-right: $formPadding;
+                            width: 20%;
+                        }
+    
+                        &.actionFormContainer {
+                            background-color: lightblue;
+                            -webkit-box-shadow: 0px 10px black
+                        }
+    
+                        & a {
+                            width: 20%;
+                            margin: auto 0 auto $formPadding;
+                        }
                     }
+                }
+                
 
-                    input {
-                        width: 40%;
-                    }
+                @include phone {
+                    & div {
+                        display: grid;
+                        grid-template-columns: 100%;
+                        grid-template-rows: 50% 50%;
+    
+                        & label {
+                            justify-self: center;
+                            font-weight: bold;
+                        }
+    
+                        & input {
+                            justify-self: center;
+                            width: 80%;
+                        }
 
-                    input[type="submit"] {
-                        display: flex;
-                        justify-self: right;
-                        align-items: center;
-                        width: 20%;
-                        margin-right: $formPadding;
-                    }
+                        & a {
+                            text-align: center;
+                        }
 
-                    &.actionFormContainer {
-                        background-color: lightblue;
-                        -webkit-box-shadow: 0px 10px black
-                    }
-
-                    a {
-                        width: 20%;
-                        margin: auto 0 auto $formPadding;
-                        
-                        
+                        & input[type="submit"] {
+                            width: 30%;
+                            padding: 0.2em;
+                            justify-content: center;
+                            align-self: center;
+                            margin-bottom: 0.5em;
+                        }
                     }
                 }
             }

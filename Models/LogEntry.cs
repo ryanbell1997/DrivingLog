@@ -17,5 +17,6 @@ namespace DrivingLog.Models
         public TimeSpan FinishDateTime { get; set; }
         public decimal QuantityCharged { get; set; }
         public TimeSpan TotalTime { get; set; }
+        public Nullable<decimal> FormattedTotalTime { get; set; }
     }
 }
