@@ -95,7 +95,7 @@ namespace DrivingLog.Models
 
         public decimal CalculateTotalEarnings(TimeSpan totalTime)
         {
-            decimal hourlyRate = 9;
+            decimal hourlyRate = 10;
             decimal returnEarnings;
 
             decimal minutes = totalTime.Minutes;

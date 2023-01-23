@@ -1,7 +1,8 @@
-﻿@model LogEntry
+﻿@using System.Globalization
+@model LogEntry
 
 <tr id="entry-@Model.Id">
-    <td>@Model.Date.ToShortDateString()</td>
+    <td>@Model.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
     <td>@Model.StartDateTime</td>
     <td>@Model.FinishDateTime</td>
     <td>@Model.TotalTime</td>
@@ -12,5 +13,4 @@
         </form>
     </td>
     <td><button class="deleteButton"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-    @*asp-route-id="@Model.Id"*@
 </tr>

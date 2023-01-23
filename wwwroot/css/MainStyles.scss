@@ -1,6 +1,6 @@
 ﻿
-$phoneWidth: 400px;
-$computerMinWidth: 401px;
+$phoneWidth: 750px;
+$computerMinWidth: 751px;
 
 @mixin phone {
     @media (max-width: $phoneWidth){
