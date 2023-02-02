@@ -13,8 +13,16 @@ using System.Linq;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Prod")), ServiceLifetime.Singleton);
+}
 
 builder.Services.AddSingleton<ILogEntryService, LogEntryService>();
 builder.Services.AddSingleton<ISettingsService, SettingsService>();
