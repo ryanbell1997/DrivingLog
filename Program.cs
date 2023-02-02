@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Beans")), ServiceLifetime.Singleton);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
 
 builder.Services.AddSingleton<ILogEntryService, LogEntryService>();
 builder.Services.AddSingleton<ISettingsService, SettingsService>();
