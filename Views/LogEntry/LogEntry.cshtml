@@ -31,6 +31,10 @@
         </div>
     </div>
 
+    <div>
+        <a asp-controller="Settings" asp-action="Index" value="settings">Settings</a>
+    </div>
+
     <h1 class="text-center" id="test">Driving Log: @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.DisplayDate.Month), @Model.DisplayDate.Year</h1>
     <p class="text-center">View or add to your driving log below. You can change the view period using the input above the table. You can edit or delete entries if you've made a mistake.</p>
 

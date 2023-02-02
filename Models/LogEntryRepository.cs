@@ -1,18 +1,21 @@
-﻿using DrivingLog.Utils;
+﻿using DrivingLog.Services.LogEntryService;
+using DrivingLog.Services.Settings;
+using DrivingLog.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DrivingLog.Models
 {
-    public class LogEntryRepository
+    public class LogEntryService : ILogEntryService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ISettingsService _settingsService;
 
-        public LogEntryRepository(AppDbContext appDbContext)
+        public LogEntryService(AppDbContext appDbContext, ISettingsService settingsService)
         {
             _appDbContext = appDbContext;
+            _settingsService = settingsService;
         }
 
         public IEnumerable<LogEntry> AllLogEntries
@@ -95,7 +98,7 @@ namespace DrivingLog.Models
 
         public decimal CalculateTotalEarnings(TimeSpan totalTime)
         {
-            decimal hourlyRate = 10;
+            decimal hourlyRate = _settingsService.HourlyRate;
             decimal returnEarnings;
 
             decimal minutes = totalTime.Minutes;

@@ -1,4 +1,5 @@
 ﻿using DrivingLog.Models;
+using DrivingLog.Services.LogEntryService;
 using DrivingLog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,15 +14,14 @@ namespace DrivingLog.Controllers
     [Authorize]
     public class LogEntryController : Controller
     {
-
         public ViewResult Index()
         {
             return View();
         }
 
-        private readonly LogEntryRepository _logEntryRepository;
+        private readonly ILogEntryService _logEntryRepository;
 
-        public LogEntryController(LogEntryRepository logEntryRepository)
+        public LogEntryController(ILogEntryService logEntryRepository)
         {
             _logEntryRepository = logEntryRepository;
         }

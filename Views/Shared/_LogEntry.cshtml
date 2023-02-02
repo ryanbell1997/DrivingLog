@@ -3,9 +3,9 @@
 
 <tr id="entry-@Model.Id">
     <td>@Model.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-    <td>@Model.StartDateTime</td>
-    <td>@Model.FinishDateTime</td>
-    <td>@Model.TotalTime</td>
+    <td>@Model.StartDateTime.ToString(@"hh\:mm")</td>
+    <td>@Model.FinishDateTime.ToString(@"hh\:mm")</td>
+    <td>@Model.TotalTime.ToString(@"hh\:mm")</td>
     <td>£@Model.QuantityCharged</td>
     <td>
         <form asp-controller="LogEntry" asp-action="EditLogEntry" asp-route-id="@Model.Id" method="post">

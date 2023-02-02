@@ -1,0 +1,22 @@
+﻿
+@model SettingsViewModel
+
+@{
+    var displayClass = string.IsNullOrEmpty(Model.ErrorMessage) ? "d-none" : "";
+}
+
+<div class="d-flex justify-content-center p-3 flex-column shadow rounded">
+    <h2 class="settingsTitle">Settings</h2>
+    <form asp-controller="Settings" asp-action="SaveSettings" method="post" class="justify-content-center settingsForm">
+        <p class="@displayClass bg-danger">@Model.ErrorMessage</p>
+        <div>
+            <label asp-for="CurrentHourlyRate">Hourly Rate</label>
+            <input asp-for="CurrentHourlyRate" />
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" />
+            <a asp-controller="LogEntry" asp-action="LogEntry">Back</a>
+        </div> 
+    </form>
+</div>
+
