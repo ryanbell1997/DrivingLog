@@ -62,6 +62,9 @@ app.UseEndpoints(endpoints =>
 });
 
 var context = app.Services.GetRequiredService<AppDbContext>();
+
+await context.Database.MigrateAsync();
+
 if (context.Settings.FirstOrDefault() is null)
 {
     await context.Settings.AddAsync(new Setting { HourlyRate = 12 });
