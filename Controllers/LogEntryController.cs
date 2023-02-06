@@ -1,15 +1,12 @@
-﻿using DrivingLog.Models;
-using DrivingLog.Services.LogEntryService;
-using DrivingLog.ViewModels;
+﻿using Application.Excel;
+using Application.LogEntrys;
+using Client.ViewModels;
+using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace DrivingLog.Controllers
+namespace Client.Controllers
 {
     [Authorize]
     public class LogEntryController : Controller
@@ -20,10 +17,12 @@ namespace DrivingLog.Controllers
         }
 
         private readonly ILogEntryService _logEntryRepository;
+        private readonly IExcelService _excelService;
 
-        public LogEntryController(ILogEntryService logEntryRepository)
+        public LogEntryController(ILogEntryService logEntryRepository, IExcelService excelService)
         {
             _logEntryRepository = logEntryRepository;
+            _excelService = excelService;
         }
 
         public IActionResult LogEntry()
@@ -96,27 +95,10 @@ namespace DrivingLog.Controllers
 
         public IActionResult DownloadExcel(LogEntryListViewModel vm)
         {
-            List<LogEntry> lstLogEntries = _logEntryRepository.GetLogEntriesByDate(vm.MonthYear).ToList();
-            MemoryStream stream = new MemoryStream();
+            if (vm.MonthYear == DateTime.MinValue) return BadRequest();
 
-            using (ExcelPackage package = new ExcelPackage(stream))
-            {
-                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
-                workSheet.Cells.LoadFromCollection(lstLogEntries, true);
-                workSheet.Column(2).Style.Numberformat.Format = "d-mmm-yy";
-                workSheet.Column(3).Style.Numberformat.Format = "h:mm";
-                workSheet.Column(4).Style.Numberformat.Format = "h:mm";
-                workSheet.Column(5).Style.Numberformat.Format = "£#,##0.00";
-                workSheet.Column(6).Style.Numberformat.Format = "h:mm";
-                workSheet.Column(7).Style.Numberformat.Format = "0.00";
-                workSheet.Row(1).Style.Font.Bold = true;
-                workSheet.Cells.AutoFitColumns();
-                package.Save();
-            }
-            stream.Position = 0;
-            string excelName = $"{vm.MonthYear.Month}-{vm.MonthYear.Year}-driving-log.xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-
+            var result = _excelService.GetExcelDownloadByDate(vm.MonthYear);
+            return File(result.stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Name);
         }
     }
 }

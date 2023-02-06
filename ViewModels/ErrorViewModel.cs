@@ -1,6 +1,6 @@
 using System;
 
-namespace DrivingLog.Models
+namespace Client.ViewModels
 {
     public class ErrorViewModel
     {

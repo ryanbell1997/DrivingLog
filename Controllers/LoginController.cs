@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DrivingLog.Controllers
+namespace Client.Controllers
 {
     public class LoginController : Controller
     {

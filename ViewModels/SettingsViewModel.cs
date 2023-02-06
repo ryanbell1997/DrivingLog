@@ -1,6 +1,6 @@
-﻿using DrivingLog.Services.Settings;
+﻿using Application.Settings;
 
-namespace DrivingLog.ViewModels
+namespace Client.ViewModels
 {
     public class SettingsViewModel
     {

@@ -1,13 +1,14 @@
-using DrivingLog.Models;
-using DrivingLog.Services.Settings;
-using DrivingLog;
+using Application.Excel;
+using Application.LogEntrys;
+using Application.Settings;
+using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DrivingLog.Services.LogEntryService;
+using Persistence;
 using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 if (builder.Environment.IsDevelopment())
 {
+    var connstr = builder.Configuration.GetConnectionString("Test");
     builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Test")), ServiceLifetime.Singleton);
 }
 else
 {
@@ -26,6 +28,7 @@ else
 
 builder.Services.AddSingleton<ILogEntryService, LogEntryService>();
 builder.Services.AddSingleton<ISettingsService, SettingsService>();
+builder.Services.AddSingleton<IExcelService, ExcelService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
@@ -65,7 +68,7 @@ var context = app.Services.GetRequiredService<AppDbContext>();
 
 await context.Database.MigrateAsync();
 
-if (context.Settings.FirstOrDefault() is null)
+if (context.Database.EnsureCreated() && context.Settings.FirstOrDefault() is null)
 {
     await context.Settings.AddAsync(new Setting { HourlyRate = 12 });
     await context.SaveChangesAsync();

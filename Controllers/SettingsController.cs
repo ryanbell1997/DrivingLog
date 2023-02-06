@@ -1,10 +1,10 @@
-﻿using DrivingLog.Services.Settings;
-using DrivingLog.Types.DTO;
-using DrivingLog.ViewModels;
+﻿using Application.DTO;
+using Application.Settings;
+using Client.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace DrivingLog.Controllers
+namespace Client.Controllers
 {
     public class SettingsController : Controller
     {
